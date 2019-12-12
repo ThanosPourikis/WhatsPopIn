@@ -4,7 +4,9 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:layout_gravity="bottom"
 	tools:context=".MainActivity">
+
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
@@ -37,7 +39,9 @@
 				android:paddingVertical="15dp"
 				app:srcCompat="@drawable/icon" />
 
+
 		</LinearLayout>
+
 
 	</com.google.android.material.appbar.AppBarLayout>
 
@@ -47,9 +51,9 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="bottom|end"
 		android:layout_margin="@dimen/fab_margin"
+		android:src="@android:drawable/ic_menu_add"
 		app:backgroundTint="#00BCD4"
 		app:hoveredFocusedTranslationZ="6dp"
-		app:maxImageSize="75dp"
-		app:srcCompat="@android:drawable/ic_menu_add" />
+		app:maxImageSize="75dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
