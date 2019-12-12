@@ -8,19 +8,33 @@
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="75dp"
 		android:theme="@style/AppTheme.AppBarOverlay">
 
-		<androidx.appcompat.widget.Toolbar
-			android:id="@+id/toolbar"
+		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
-			app:popupTheme="@style/AppTheme.PopupOverlay" />
+			android:layout_height="match_parent"
+			android:orientation="horizontal">
+
+			<EditText
+				android:id="@+id/editText8"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:ems="10"
+				android:inputType="textPersonName"
+				android:text="What'sPopIn'" />
+
+			<ImageView
+				android:id="@+id/imageView3"
+				android:layout_width="150dp"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:paddingVertical="5dp"
+				app:srcCompat="@drawable/icon" />
+
+		</LinearLayout>
 
 	</com.google.android.material.appbar.AppBarLayout>
-
-	<include layout="@layout/content_main" />
 
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:id="@+id/fab"
