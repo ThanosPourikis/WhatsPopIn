@@ -22,6 +22,8 @@
 		<activity android:name=".Activity2"></activity>
 		<activity android:name=".profileActivity"></activity>
 		<activity android:name=".contentMain"></activity>
+		<activity android:name=".savedActivity"></activity>
+
 
 	</application>
 

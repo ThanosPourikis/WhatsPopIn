@@ -10,4 +10,6 @@
 	<string name="password">Password</string>
 	<string name="email">Email</string>
 	<string name="titleCont">Your PopIns</string>
+	<string name="mainTitle">What\'s PopIn\'</string>
+	<string name="popin">PopIn</string>
 </resources>

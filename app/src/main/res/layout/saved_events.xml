@@ -1,41 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif-condensed-medium"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="20dp"
-                    android:text="Your PopIns"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="#0D0C0B"
-                    android:textSize="25dp" />
-
-            </LinearLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +25,7 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="20dp"
-                android:text="What's PopIn'"
+                android:text="@string/titleCont"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="#0D0C0B"
                 android:textSize="25dp" />
@@ -61,23 +36,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:paddingVertical="15dp"
-                app:srcCompat="@drawable/icon" />
+                android:src="@drawable/icon" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="20dp"
-            android:text="What's PopIn'"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#0D0C0B"
-            android:textSize="25dp" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

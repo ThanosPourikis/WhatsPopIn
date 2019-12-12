@@ -15,7 +15,7 @@ public class profileActivity extends Activity {
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent myIntent = new Intent(v.getContext(), contentMain.class);
+				Intent myIntent = new Intent(v.getContext(), savedActivity.class);
 				startActivityForResult(myIntent, 0);
 			}
 		});
