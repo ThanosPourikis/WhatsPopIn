@@ -25,7 +25,7 @@
 				android:text="What'sPopIn'" />
 
 			<ImageView
-				android:id="@+id/imageView3"
+				android:id="@+id/profile"
 				android:layout_width="150dp"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
