@@ -21,6 +21,8 @@
 		</activity>
 		<activity android:name=".Activity2"></activity>
 		<activity android:name=".profileActivity"></activity>
+		<activity android:name=".contentMain"></activity>
+
 	</application>
 
 
