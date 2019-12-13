@@ -30,7 +30,7 @@
 					android:fontFamily="sans-serif-condensed-medium"
 					android:paddingHorizontal="20dp"
 					android:paddingVertical="20dp"
-					android:text="@string/titleCont"
+					android:text="@string/titleEvent"
 					android:textAppearance="@style/TextAppearance.AppCompat.Large"
 					android:textColor="#0D0C0B"
 					android:textSize="25dp" />
