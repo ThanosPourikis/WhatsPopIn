@@ -15,7 +15,7 @@ public class Activity2 extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_event);
 
-		Button next = (Button) findViewById(R.id.button);
+		Button next = findViewById(R.id.button);
 		next.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				TextView usr = findViewById(R.id.eventNameText);

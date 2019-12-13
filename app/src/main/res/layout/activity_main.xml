@@ -37,7 +37,7 @@
 				android:layout_height="match_parent"
 				android:layout_weight="1"
 				android:paddingVertical="15dp"
-				app:srcCompat="@drawable/icon" />
+				android:src="@drawable/icon" />
 
 
 		</LinearLayout>
@@ -57,11 +57,12 @@
 			android:orientation="vertical">
 
 			<LinearLayout
+				android:id="@+id/event1"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content">
 
 				<ImageView
-					android:id="@+id/imageView2"
+					android:id="@+id/imgMainActivity"
 					android:layout_width="50dp"
 					android:layout_height="50dp"
 					android:src="@drawable/icon" />

@@ -11,7 +11,7 @@ public class profileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 
-		Button btn = (Button) findViewById(R.id.loginBtn);
+		Button btn = findViewById(R.id.loginBtn);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

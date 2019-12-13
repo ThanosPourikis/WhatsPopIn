@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 		ImageView img =findViewById(R.id.profile);
-				img.setOnClickListener(new View.OnClickListener()
+		img.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view) {
@@ -37,7 +37,14 @@ public class MainActivity extends AppCompatActivity {
 				startActivityForResult(myIntent, 0);
 			}
 		});
-
+		ImageView eventImg = findViewById(R.id.imgMainActivity);
+		eventImg.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(v.getContext(),contentMain.class);
+				startActivity(myIntent);
+			}
+		});
 
 	}
 
