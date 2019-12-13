@@ -78,14 +78,16 @@
 				<Button
 					android:id="@+id/button3"
 					android:layout_width="189dp"
-					android:layout_height="wrap_content"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
+					android:backgroundTint="#EBCD1F4E"
 					android:text="Upload Photo" />
 
 				<Button
 					android:id="@+id/button"
 					android:layout_width="189dp"
 					android:layout_height="wrap_content"
+					android:backgroundTint="#EBCD1F4E"
 					android:text="@string/done" />
 			</LinearLayout>
 		</LinearLayout>
