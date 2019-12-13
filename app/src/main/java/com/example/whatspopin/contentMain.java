@@ -12,7 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.MapView;
 
-public class contentMain extends AppCompatActivity implements OnMapReadyCallback {
+public class contentMain extends Activity implements OnMapReadyCallback {
 	private GoogleMap gmap;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
