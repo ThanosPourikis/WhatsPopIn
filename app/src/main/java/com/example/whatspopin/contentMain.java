@@ -14,7 +14,7 @@ public class contentMain extends Activity implements OnMapReadyCallback {
 	private MapView mapView;
 	private GoogleMap gmap;
 
-	private static final String MAP_VIEW_BUNDLE_KEY = "AIzaSyC57yqZ7YHfyu3yHCoSl1HGbSCZrNVVTBU";
+	private static final String MAP_VIEW_BUNDLE_KEY = "";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_main);
