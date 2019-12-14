@@ -18,7 +18,7 @@ public class contentMain extends Activity implements OnMapReadyCallback {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_main);
 
-		MapView map = findViewById(R.id.mapView);
+//		MapView map = findViewById(R.id.mapView);
 
 
 	}
