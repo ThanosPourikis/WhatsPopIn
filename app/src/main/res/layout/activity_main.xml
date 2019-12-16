@@ -38,7 +38,7 @@
 				android:layout_width="150dp"
 				android:layout_height="match_parent"
 				android:layout_weight="1"
-				android:paddingVertical="15dp"
+				android:paddingVertical="2dp"
 				android:src="@drawable/icon" />
 
 
@@ -67,7 +67,6 @@
 					android:id="@+id/imgMainActivity"
 					android:layout_width="64dp"
 					android:layout_height="50dp"
-					android:paddingVertical="8dp"
 					android:src="@drawable/icon" />
 
 				<LinearLayout

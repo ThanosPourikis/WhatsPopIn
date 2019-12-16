@@ -1,11 +1,9 @@
 package com.example.whatspopin;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 
-				Intent myIntent = new Intent(view.getContext(), Activity2.class);
+				Intent myIntent = new Intent(view.getContext(), CreateEvent.class);
 				startActivityForResult(myIntent, 0);
 			}
 		});
