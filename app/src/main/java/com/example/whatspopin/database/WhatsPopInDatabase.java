@@ -15,7 +15,7 @@ public abstract class WhatsPopInDatabase extends RoomDatabase {
 	public static synchronized WhatsPopInDatabase getInstance(Context context){
 		if(instance == null){
 			instance = Room.databaseBuilder(context.getApplicationContext(),WhatsPopInDatabase.class,DB_NAME)
-					.allowMainThreadQueries()//Gia debug mono prepei na to kanoume delete gia production
+					//.allowMainThreadQueries()//Gia debug mono prepei na to kanoume delete gia production
 					.fallbackToDestructiveMigrationFrom().build();
 		}
 		return instance;

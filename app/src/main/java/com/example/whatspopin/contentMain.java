@@ -20,9 +20,6 @@ public class contentMain extends Activity implements OnMapReadyCallback {
 		setContentView(R.layout.content_main);
 
 
-
-
-
 		Bundle mapViewBundle = null;
 		if (savedInstanceState != null) {
 			mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
