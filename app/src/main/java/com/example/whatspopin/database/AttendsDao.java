@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.RoomWarnings;
 import androidx.room.Update;
 
 import java.util.List;
@@ -14,12 +15,17 @@ public interface AttendsDao {
 
 	@Query("SELECT * FROM Attends")
 	List<Attends> getAttends();
+	@SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
+	@Query("SELECT * FROM ATTENDS,USER,EVENT WHERE ATTENDS.eventId = USER.userId AND ATTENDS.eventId = EVENT.eventId")
+	List<Event> test();
 	@Insert
 	void insertAttends(Attends attends);
 	@Update
-	Void updateAttends(Attends attends);
+	void updateAttends(Attends attends);
 	@Delete
-	Void deleteAttends(Attends attends);
+	void deleteAttends(Attends attends);
+
 
 
 }
+

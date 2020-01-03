@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity
 public class Event {
 	@PrimaryKey(autoGenerate = true)
@@ -18,7 +20,9 @@ public class Event {
 	@ColumnInfo(name = "description")
 	private String description;
 
-	public Event(int eventId,String name,String place,String category,String description)
+
+
+	public Event(int eventId, String name, String place, String category, String description)
 	{
 		this.eventId = eventId;
 		this.name = name;
@@ -56,5 +60,6 @@ public class Event {
 	public String getDescription() {
 		return description;
 	}
+
 }
 
