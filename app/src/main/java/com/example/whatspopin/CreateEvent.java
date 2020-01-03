@@ -38,7 +38,8 @@ public class CreateEvent extends Activity {
 
 
 				});
-				Intent intent = new Intent();
+				Intent intent = new Intent(view.getContext(),MainActivity.class);
+				startActivity(intent);
 				setResult(RESULT_OK, intent);
 				finish();
 			}

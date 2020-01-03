@@ -20,10 +20,10 @@
 			</intent-filter>
 		</activity>
 		<activity android:name=".CreateEvent"></activity>
-		<activity android:name=".profileActivity"></activity>
-		<activity android:name=".contentMain">
+		<activity android:name=".ProfileActivity"></activity>
+		<activity android:name=".ContentMain">
 		</activity>
-		<activity android:name=".savedActivity"></activity>
+		<activity android:name=".SavedActivity"></activity>
 
 		<meta-data android:name="com.google.android.geo.API_KEY"
 			android:value=""></meta-data>

@@ -15,7 +15,6 @@ public interface AttendsDao {
 
 	@Query("SELECT * FROM Attends")
 	List<Attends> getAttends();
-	@SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
 	@Query("SELECT * FROM ATTENDS,USER,EVENT WHERE ATTENDS.eventId = USER.userId AND ATTENDS.eventId = EVENT.eventId")
 	List<Event> test();
 	@Insert
