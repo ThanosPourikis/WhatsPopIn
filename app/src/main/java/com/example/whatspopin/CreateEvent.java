@@ -25,8 +25,7 @@ public class CreateEvent extends Activity {
 		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
 
 		Button next = findViewById(R.id.button);
-		next.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+		next.setOnClickListener((View view)->{
 				Executor myExecutor = Executors.newSingleThreadExecutor();
 				myExecutor.execute(() -> {
 				TextView usr = findViewById(R.id.eventNameText);
@@ -44,6 +43,6 @@ public class CreateEvent extends Activity {
 				finish();
 			}
 
-		});
+		);
 	}
 }

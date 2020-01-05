@@ -19,5 +19,4 @@ public interface EventDao {
 	void updateEvent(Event event);
 	@Delete
 	void deleteEvent(Event event);
-
 }
