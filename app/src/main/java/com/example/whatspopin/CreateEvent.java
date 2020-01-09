@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.whatspopin.database.Event;
 import com.example.whatspopin.database.WhatsPopInDatabase;
 
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -31,7 +32,9 @@ public class CreateEvent extends Activity {
 
 	private Button next;
 
+	private byte[] imgByteArray;
 	private Bitmap imgBitmap;
+
 	/**
 	 * Called when the activity is first created.
 	 */
@@ -47,10 +50,11 @@ public class CreateEvent extends Activity {
 
 		next = findViewById(R.id.done);
 		next.setOnClickListener((View view) -> {
-					Executor myExecutor = Executors.newSingleThreadExecutor();
-					myExecutor.execute(() ->
+			Executor myExecutor = Executors.newSingleThreadExecutor();
+			myExecutor.execute(() ->
 					{
-						Event event = new Event(usr.getText().toString(), loc.getText().toString(), cat.getText().toString(), desc.getText().toString());
+						Event event = new Event(usr.getText().toString(), loc.getText().toString(),
+								cat.getText().toString(), desc.getText().toString(),imgByteArray);
 						db.eventDao().insertEvent(event);
 					});
 
@@ -79,14 +83,18 @@ public class CreateEvent extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+
 		if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
 			Uri imageUri = data.getData();
 			imageView.setImageURI(imageUri);
-			try {
-				imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-			}catch (Exception e){
-				System.out.println(e);
-			}
+				try {
+					imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					imgBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+					imgByteArray = bos.toByteArray();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 			imageView.setVisibility(View.VISIBLE);
 			imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1080));
 		}

@@ -3,6 +3,7 @@ package com.example.whatspopin;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.whatspopin.database.Event;
 import com.example.whatspopin.database.WhatsPopInDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -12,12 +13,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity {
-
+	List<Event> ev;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,10 +27,13 @@ public class MainActivity extends AppCompatActivity {
 		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
 		Executor myEx = Executors.newSingleThreadExecutor();
 
-		myEx.execute(()->
-			ScrollViewFill.fill(findViewById(R.id.mainActEvList),db.eventDao().getEventList(),1)
-		);
+		myEx.execute(()-> {
+			ev = db.eventDao().getEventList();
+			runOnUiThread(()->
+					ScrollViewFill.fill(findViewById(R.id.mainActEvList), ev, 1)
+			);
 
+		});
 
 		FloatingActionButton fab = findViewById(R.id.fab);
 		fab.setOnClickListener((View view) ->{

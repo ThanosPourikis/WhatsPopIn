@@ -22,10 +22,12 @@ public class Event implements Serializable {
 	private String description;
 	@ColumnInfo(name = "creatorId")
 	private int creatorId;
+	@ColumnInfo(typeAffinity = ColumnInfo.BLOB,name = "image")
+	private byte[] image;
 
 
 
-	public Event(int eventId, String name, String place, String category, String description,int creatorId)
+	public Event(int eventId, String name, String place, String category, String description,int creatorId,byte[] image)
 	{
 		this.eventId = eventId;
 		this.name = name;
@@ -33,15 +35,17 @@ public class Event implements Serializable {
 		this.category = category;
 		this.description = description;
 		this.creatorId = creatorId;
+		this.image = image;
 
 	}
 	@Ignore
-	public Event(String name,String place,String category,String description)
+	public Event(String name,String place,String category,String description,byte[] image)
 	{
 		this.name = name;
 		this.place = place;
 		this.category = category;
 		this.description = description;
+		this.image = image;
 
 	}
 
@@ -60,5 +64,7 @@ public class Event implements Serializable {
 	public String getDescription() { return description;	}
 
 	public int getCreatorId() {	return creatorId;}
+
+	public byte[] getImage() {return image;}
 }
 
