@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".SavedActivity"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -20,7 +21,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/titleSavedEvents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,15 +47,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="656dp"
+        android:layout_height="match_parent"
         android:translationY="75dp">
 
         <LinearLayout
             android:id="@+id/savedActEvList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
     </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

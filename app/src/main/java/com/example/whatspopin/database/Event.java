@@ -19,16 +19,19 @@ public class Event {
 	private String category;
 	@ColumnInfo(name = "description")
 	private String description;
+	@ColumnInfo(name = "creatorId")
+	private int creatorId;
 
 
 
-	public Event(int eventId, String name, String place, String category, String description)
+	public Event(int eventId, String name, String place, String category, String description,int creatorId)
 	{
 		this.eventId = eventId;
 		this.name = name;
 		this.place = place;
 		this.category = category;
 		this.description = description;
+		this.creatorId = creatorId;
 
 	}
 	@Ignore
@@ -49,17 +52,12 @@ public class Event {
 		return name;
 	}
 
-	public String getPlace() {
-		return place;
-	}
+	public String getPlace() { return place; }
 
-	public String getCategory() {
-		return category;
-	}
+	public String getCategory() { return category; }
 
-	public String getDescription() {
-		return description;
-	}
+	public String getDescription() { return description;	}
 
+	public int getCreatorId() {	return creatorId;}
 }
 

@@ -15,8 +15,8 @@ public interface AttendsDao {
 
 	@Query("SELECT * FROM Attends")
 	List<Attends> getAttends();
-	@Query("SELECT * FROM ATTENDS,USER,EVENT WHERE ATTENDS.eventId = USER.userId AND ATTENDS.eventId = EVENT.eventId")
-	List<Event> test();
+	//@Query("SELECT * FROM ATTENDS,USER,EVENT WHERE ATTENDS.eventId = USER.userId AND ATTENDS.eventId = EVENT.eventId")
+	//List<Event> test();
 	@Insert
 	void insertAttends(Attends attends);
 	@Update
