@@ -4,19 +4,26 @@ import android.app.Activity;
 import android.os.Bundle;
 
 
+import com.example.whatspopin.database.Event;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.Serializable;
 
 public class ContentMain extends Activity implements OnMapReadyCallback {
 	private MapView mapView;
 	private GoogleMap gmap;
 
+
 	private static final String MAP_VIEW_BUNDLE_KEY = "";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_main);
+
+		Event event = (Event) getIntent().getSerializableExtra("eventObj");
 
 
 		Bundle mapViewBundle = null;
@@ -42,10 +49,12 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 		mapView.onSaveInstanceState(mapViewBundle);
 	}
 
+	//40.7143528, -74.0059731
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		gmap = googleMap;
 		LatLng ny = new LatLng(40.7143528, -74.0059731);
+		gmap.addMarker(new MarkerOptions().position(ny));
 	}
 	@Override
 	protected void onResume() {
@@ -79,4 +88,5 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 		super.onLowMemory();
 		mapView.onLowMemory();
 	}
+
 }

@@ -21,6 +21,7 @@ public class SavedActivity extends Activity {
 
 		Executor myEx = Executors.newSingleThreadExecutor();
 		myEx.execute(()->
+
 			ScrollViewFill.fill(findViewById(R.id.savedActEvList),db.eventDao().getEventList(),2)
 		);
 		TextView txt = findViewById(R.id.titleSavedEvents);
