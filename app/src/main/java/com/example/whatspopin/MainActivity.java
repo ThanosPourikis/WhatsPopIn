@@ -19,7 +19,6 @@ import java.util.concurrent.Executors;
 
 
 public class MainActivity extends AppCompatActivity {
-	List<Event> ev;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 		Executor myEx = Executors.newSingleThreadExecutor();
 
 		myEx.execute(()-> {
-			ev = db.eventDao().getEventList();
+			List<Event> ev = db.eventDao().getEventList();
 			runOnUiThread(()->
 					ScrollViewFill.fill(findViewById(R.id.mainActEvList), ev, 1)
 			);

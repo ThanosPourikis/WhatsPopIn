@@ -1,60 +1,66 @@
 package com.example.whatspopin;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import com.example.whatspopin.database.Event;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.Serializable;
 
 public class ContentMain extends Activity implements OnMapReadyCallback {
 	private MapView mapView;
 	private GoogleMap gmap;
 
 
-	private static final String MAP_VIEW_BUNDLE_KEY = "";
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.content_main);
 
 		Event event = (Event) getIntent().getSerializableExtra("eventObj");
 
+		TextView title = findViewById(R.id.contentMainTitle);
+		title.setText(event.getName());
+		TextView desc = findViewById(R.id.contentMainDesc);
+		desc.setText(event.getDescription());
 
-		Bundle mapViewBundle = null;
-		if (savedInstanceState != null) {
-			mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
-		}
+		ImageView profile = findViewById(R.id.profile);
+		profile.setOnClickListener((View v)->{
+			Intent myIntent = new Intent(v.getContext(), ProfileActivity.class);
+			startActivityForResult(myIntent, 0);
+			finish();
+		});
+
 
 		mapView = findViewById(R.id.mapView);
-		mapView.onCreate(mapViewBundle);
+		mapView.onCreate(savedInstanceState);
 		mapView.getMapAsync(this);
 
-	}
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
 
-		Bundle mapViewBundle = outState.getBundle(MAP_VIEW_BUNDLE_KEY);
-		if (mapViewBundle == null) {
-			mapViewBundle = new Bundle();
-			outState.putBundle(MAP_VIEW_BUNDLE_KEY, mapViewBundle);
-		}
 
-		mapView.onSaveInstanceState(mapViewBundle);
+
 	}
 
-	//40.7143528, -74.0059731
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		gmap = googleMap;
-		LatLng ny = new LatLng(40.7143528, -74.0059731);
-		gmap.addMarker(new MarkerOptions().position(ny));
+		LatLng papel = new LatLng(38.219252, 21.746566);
+
+
+
+		gmap.addMarker(new MarkerOptions().position(papel));
+
+		gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(papel,12));
 	}
 	@Override
 	protected void onResume() {

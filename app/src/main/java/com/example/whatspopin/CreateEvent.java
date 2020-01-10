@@ -90,7 +90,7 @@ public class CreateEvent extends Activity {
 				try {
 					imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
 					ByteArrayOutputStream bos = new ByteArrayOutputStream();
-					imgBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+					imgBitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
 					imgByteArray = bos.toByteArray();
 				} catch (Exception e) {
 					System.out.println(e);

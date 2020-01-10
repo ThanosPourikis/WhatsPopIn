@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.whatspopin.database.Event;
 import com.example.whatspopin.database.WhatsPopInDatabase;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -20,10 +21,10 @@ public class SavedActivity extends Activity {
 
 
 		Executor myEx = Executors.newSingleThreadExecutor();
-		myEx.execute(()->
-
-			ScrollViewFill.fill(findViewById(R.id.savedActEvList),db.eventDao().getEventList(),2)
-		);
+		myEx.execute(()-> {
+			List<Event> ev = db.eventDao().getEventList();
+			runOnUiThread(()-> ScrollViewFill.fill(findViewById(R.id.savedActEvList), ev, 2));
+		});
 		TextView txt = findViewById(R.id.titleSavedEvents);
 
 		txt.setOnClickListener((View v) ->
