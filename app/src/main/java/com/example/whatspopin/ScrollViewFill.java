@@ -48,8 +48,8 @@ public final class ScrollViewFill extends AppCompatActivity {
 				img.setImageResource(R.drawable.icon);
 			}
 
-				LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(200, 200);
-				img.setLayoutParams(layoutParams);
+				img.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
+
 
 
 				LinearLayout li2 = new LinearLayout(context);

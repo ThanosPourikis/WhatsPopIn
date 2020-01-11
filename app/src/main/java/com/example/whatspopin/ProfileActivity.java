@@ -13,10 +13,10 @@ public class ProfileActivity extends Activity {
 
 		Button btn = findViewById(R.id.login_button);
 		btn.setOnClickListener((View v) -> {
-				Intent myIntent = new Intent(v.getContext(), SavedActivity.class);
-				startActivityForResult(myIntent, 0);
+			Intent myIntent = new Intent(v.getContext(), SavedActivity.class);
+			startActivityForResult(myIntent, 0);
 
 		});
 	}
 
-	}
+}

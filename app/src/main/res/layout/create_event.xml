@@ -31,12 +31,11 @@
 			android:layout_height="wrap_content"
 			android:text="@string/location" />
 
-		<EditText
-			android:id="@+id/locTextArea"
+		<fragment
+			android:id="@+id/map_autocomplete_fragment"
+			android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:ems="10"
-			android:inputType="textPersonName" />
+			android:layout_height="match_parent" />
 
 		<TextView
 			android:id="@+id/catText"
@@ -65,11 +64,15 @@
 			android:gravity="start|top"
 			android:inputType="textMultiLine" />
 
-		<CalendarView
-			android:id="@+id/calendarView"
+		<DatePicker
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:fitsSystemWindows="true" />
+			android:id="@+id/date"/>
+
+		<TimePicker
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/time"/>
 
 		<ImageView
 			android:id="@+id/createImageView"
@@ -97,7 +100,10 @@
 				android:layout_height="wrap_content"
 				android:backgroundTint="#EBCD1F4E"
 				android:text="@string/done" />
+
+
 		</LinearLayout>
+
 	</LinearLayout>
 </ScrollView>
 

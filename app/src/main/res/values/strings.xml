@@ -14,4 +14,6 @@
 	<string name="popin">PopIn</string>
 	<string name="titleEvent">Placeholder</string>
 	<string name="upload_photo">Upload Photo</string>
+	<string name="pick_date">Pick Date</string>
+	<string name="api_key">AIzaSyB-7C-gRS73G6y7lHgddgxSnGmqQ8mrMZA</string>
 </resources>

@@ -26,34 +26,32 @@ public class MainActivity extends AppCompatActivity {
 		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
 		Executor myEx = Executors.newSingleThreadExecutor();
 
-		myEx.execute(()-> {
+		myEx.execute(() -> {
 			List<Event> ev = db.eventDao().getEventList();
-			runOnUiThread(()->
+			runOnUiThread(() ->
 					ScrollViewFill.fill(findViewById(R.id.mainActEvList), ev, 1)
 			);
 
 		});
 
 		FloatingActionButton fab = findViewById(R.id.fab);
-		fab.setOnClickListener((View view) ->{
+		fab.setOnClickListener((View view) -> {
 
-				Intent myIntent = new Intent(view.getContext(), CreateEvent.class);
-				startActivityForResult(myIntent, 0);
-			}
+					Intent myIntent = new Intent(view.getContext(), CreateEvent.class);
+					startActivityForResult(myIntent, 0);
+				}
 		);
 
-		ImageView img =findViewById(R.id.profile);
-		img.setOnClickListener((View view) ->{
-				Intent myIntent = new Intent(view.getContext(), ProfileActivity.class);
-				startActivityForResult(myIntent, 0);
+		ImageView img = findViewById(R.id.profile);
+		img.setOnClickListener((View view) -> {
+					Intent myIntent = new Intent(view.getContext(), ProfileActivity.class);
+					startActivityForResult(myIntent, 0);
 
-			}
+				}
 		);
-
 
 
 	}
-
 
 
 }

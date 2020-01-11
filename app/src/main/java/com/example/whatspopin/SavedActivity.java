@@ -21,18 +21,18 @@ public class SavedActivity extends Activity {
 
 
 		Executor myEx = Executors.newSingleThreadExecutor();
-		myEx.execute(()-> {
+		myEx.execute(() -> {
 			List<Event> ev = db.eventDao().getEventList();
-			runOnUiThread(()-> ScrollViewFill.fill(findViewById(R.id.savedActEvList), ev, 2));
+			runOnUiThread(() -> ScrollViewFill.fill(findViewById(R.id.savedActEvList), ev, 2));
 		});
 		TextView txt = findViewById(R.id.titleSavedEvents);
 
 		txt.setOnClickListener((View v) ->
-		{		Intent myIntent = new Intent(v.getContext(), MainActivity.class);
-				startActivityForResult(myIntent, 0);
-				finish();
+		{
+			Intent myIntent = new Intent(v.getContext(), MainActivity.class);
+			startActivityForResult(myIntent, 0);
+			finish();
 		});
-
 
 
 	}

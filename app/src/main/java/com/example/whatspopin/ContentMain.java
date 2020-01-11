@@ -14,13 +14,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.text.SimpleDateFormat;
 
 
 public class ContentMain extends Activity implements OnMapReadyCallback {
 	private MapView mapView;
 	private GoogleMap gmap;
+
+	TextView title;
+	TextView dateAndTime;
+	TextView desc;
 
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,13 +34,16 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 
 		Event event = (Event) getIntent().getSerializableExtra("eventObj");
 
-		TextView title = findViewById(R.id.contentMainTitle);
+		title = findViewById(R.id.contentMainTitle);
 		title.setText(event.getName());
-		TextView desc = findViewById(R.id.contentMainDesc);
+		desc = findViewById(R.id.contentMainDesc);
 		desc.setText(event.getDescription());
+		dateAndTime = findViewById(R.id.dateAndTime);
+		dateAndTime.setText(new SimpleDateFormat("dd/MM/YY").format(event.getDate())
+				+ " At " + event.getTime());
 
 		ImageView profile = findViewById(R.id.profile);
-		profile.setOnClickListener((View v)->{
+		profile.setOnClickListener((View v) -> {
 			Intent myIntent = new Intent(v.getContext(), ProfileActivity.class);
 			startActivityForResult(myIntent, 0);
 			finish();
@@ -47,8 +55,6 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 		mapView.getMapAsync(this);
 
 
-
-
 	}
 
 	@Override
@@ -57,11 +63,10 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 		LatLng papel = new LatLng(38.219252, 21.746566);
 
 
-
 		gmap.addMarker(new MarkerOptions().position(papel));
-
-		gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(papel,12));
+		gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(papel, 12));
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -79,16 +84,19 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 		super.onStop();
 		mapView.onStop();
 	}
+
 	@Override
 	protected void onPause() {
 		mapView.onPause();
 		super.onPause();
 	}
+
 	@Override
 	protected void onDestroy() {
 		mapView.onDestroy();
 		super.onDestroy();
 	}
+
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();

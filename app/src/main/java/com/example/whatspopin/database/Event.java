@@ -6,7 +6,6 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 public class Event implements Serializable {
@@ -24,10 +23,14 @@ public class Event implements Serializable {
 	private int creatorId;
 	@ColumnInfo(typeAffinity = ColumnInfo.BLOB,name = "image")
 	private byte[] image;
+	@ColumnInfo(name = "date")
+	private long date;
+	@ColumnInfo(name = "time")
+	private String time;
 
 
 
-	public Event(int eventId, String name, String place, String category, String description,int creatorId,byte[] image)
+	public Event(int eventId, String name, String place, String category, String description,long date,String time,int creatorId,byte[] image)
 	{
 		this.eventId = eventId;
 		this.name = name;
@@ -35,16 +38,20 @@ public class Event implements Serializable {
 		this.category = category;
 		this.description = description;
 		this.creatorId = creatorId;
+		this.date = date;
+		this.time = time;
 		this.image = image;
 
 	}
 	@Ignore
-	public Event(String name,String place,String category,String description,byte[] image)
+	public Event(String name,String place,String category,String description,long date,String time,byte[] image)
 	{
 		this.name = name;
 		this.place = place;
 		this.category = category;
 		this.description = description;
+		this.date = date;
+		this.time = time;
 		this.image = image;
 
 	}
@@ -66,5 +73,9 @@ public class Event implements Serializable {
 	public int getCreatorId() {	return creatorId;}
 
 	public byte[] getImage() {return image;}
+
+	public long getDate() {return date;}
+
+	public String getTime() {return time;}
 }
 
