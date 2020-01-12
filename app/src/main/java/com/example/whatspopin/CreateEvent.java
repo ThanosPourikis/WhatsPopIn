@@ -37,7 +37,7 @@ public class CreateEvent extends AppCompatActivity {
 	final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
 	private static final int PICK_IMAGE = 100;
 	private TextView usr;
-	private String loc;
+	private double loc[] ={0,0};
 	private TextView cat;
 	private TextView desc;
 
@@ -65,7 +65,6 @@ public class CreateEvent extends AppCompatActivity {
 		cat = findViewById(R.id.catTextArea);
 		desc = findViewById(R.id.descTextArea);
 		imageView = findViewById(R.id.createImageView);
-
 		date = findViewById(R.id.date);
 		time = findViewById(R.id.time);
 
@@ -80,12 +79,20 @@ public class CreateEvent extends AppCompatActivity {
 		autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 			@Override
 			public void onPlaceSelected(@NonNull Place place) {
-				loc = place.getLatLng().toString();
-				System.out.println(place.getLatLng().toString());
+				try {
+					loc[0] = place.getLatLng().latitude;
+					loc[1] = place.getLatLng().longitude;
+					System.out.println(loc[0]+","+loc[1]);
+					System.out.println(place.getLatLng().toString());
+
+				}catch (Exception e){
+					System.out.println(e);
+				}
 			}
 
 			@Override
 			public void onError(@NonNull Status status) {
+				System.out.println(status);
 
 			}
 		});
@@ -96,7 +103,7 @@ public class CreateEvent extends AppCompatActivity {
 					myExecutor.execute(() ->
 					{
 
-						Event event = new Event(usr.getText().toString(), loc
+						Event event = new Event(usr.getText().toString(), loc.toString()
 								, cat.getText().toString(), desc.getText().toString()
 								, date.getAutofillValue().getDateValue(), (time.getHour() + ":" + time.getMinute())
 								, imgByteArray);

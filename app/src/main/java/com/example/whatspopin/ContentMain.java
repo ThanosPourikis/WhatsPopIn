@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 
 public class ContentMain extends Activity implements OnMapReadyCallback {
 	private MapView mapView;
-	private GoogleMap gmap;
 
 	TextView title;
 	TextView dateAndTime;
@@ -59,12 +58,11 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
-		gmap = googleMap;
 		LatLng papel = new LatLng(38.219252, 21.746566);
 
 
-		gmap.addMarker(new MarkerOptions().position(papel));
-		gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(papel, 12));
+		googleMap.addMarker(new MarkerOptions().position(papel));
+		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(papel, 12));
 	}
 
 	@Override
