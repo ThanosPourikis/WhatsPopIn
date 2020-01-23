@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,20 +35,17 @@ public final class ScrollViewFill extends AppCompatActivity {
 				LinearLayout li = new LinearLayout(context);
 				li.setOrientation(LinearLayout.HORIZONTAL);
 
-				//Image which is to be taken from the local Database
 				ImageView img = new ImageView(context);
-			try{
-				byte [] imgBitmap = i.getImage();
-				Bitmap bitmap = BitmapFactory.decodeByteArray(imgBitmap,0,imgBitmap.length);
-				img.setImageBitmap(bitmap);
-			}catch (Exception e)
-			{
-				System.out.println(e);
-				img.setImageResource(R.drawable.icon);
-			}
+				try {
+					byte[] imgBitmap = i.getImage();
+					Bitmap bitmap = BitmapFactory.decodeByteArray(imgBitmap, 0, imgBitmap.length);
+					img.setImageBitmap(bitmap);
+				} catch (Exception e) {
+					System.out.println(e);
+					img.setImageResource(R.drawable.icon);
+				}
 
 				img.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
-
 
 
 				LinearLayout li2 = new LinearLayout(context);

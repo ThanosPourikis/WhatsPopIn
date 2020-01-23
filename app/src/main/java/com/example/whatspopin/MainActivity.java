@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
 		ImageView img = findViewById(R.id.profile);
 		img.setOnClickListener((View view) -> {
-					Intent myIntent = new Intent(view.getContext(), ProfileActivity.class);
+					Intent myIntent = new Intent(view.getContext(), LoginActivity.class);
 					startActivityForResult(myIntent, 0);
 
 				}

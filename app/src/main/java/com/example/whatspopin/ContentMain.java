@@ -43,7 +43,7 @@ public class ContentMain extends Activity implements OnMapReadyCallback {
 
 		ImageView profile = findViewById(R.id.profile);
 		profile.setOnClickListener((View v) -> {
-			Intent myIntent = new Intent(v.getContext(), ProfileActivity.class);
+			Intent myIntent = new Intent(v.getContext(), LoginActivity.class);
 			startActivityForResult(myIntent, 0);
 			finish();
 		});

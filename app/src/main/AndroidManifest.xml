@@ -10,6 +10,7 @@
 	<permission
 		android:name="com.example.permission.MAPS_RECEIVE"
 		android:protectionLevel="signature" />
+
 	<uses-permission android:name="com.example.permission.MAPS_RECEIVE" />
 
 	<application
@@ -19,6 +20,7 @@
 		android:roundIcon="@mipmap/ic_launcher_round"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
+		<activity android:name=".RegisterActivity"></activity>
 		<activity
 			android:name=".MainActivity"
 			android:label="@string/app_name"
@@ -29,16 +31,14 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-
-		<activity android:name=".CreateEvent"></activity>
-		<activity android:name=".ProfileActivity"></activity>
-		<activity android:name=".ContentMain"></activity>
-		<activity android:name=".SavedActivity"></activity>
+		<activity android:name=".CreateEvent" />
+		<activity android:name=".LoginActivity" />
+		<activity android:name=".ContentMain" />
+		<activity android:name=".SavedActivity" />
 
 		<meta-data
 			android:name="com.google.android.geo.API_KEY"
-			android:value="AIzaSyB-7C-gRS73G6y7lHgddgxSnGmqQ8mrMZA"></meta-data>
+			android:value="AIzaSyB-7C-gRS73G6y7lHgddgxSnGmqQ8mrMZA" />
 	</application>
-
 
 </manifest>

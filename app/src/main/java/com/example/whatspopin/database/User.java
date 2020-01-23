@@ -1,24 +1,19 @@
 package com.example.whatspopin.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class User {
-	@PrimaryKey(autoGenerate = true)
-	private int userId;
+public class User implements Serializable {
+	@PrimaryKey
+	@NonNull
 	private String email;
 	private String password;
 
-	public User(int userId,String email,String password)
-	{
-		this.userId = userId;
-		this.email = email;
-		this.password = password;
-	}
-
-	@Ignore
 	public User(String email,String password)
 	{
 		this.email = email;
@@ -27,10 +22,6 @@ public class User {
 
 
 
-
-	public int getUserId() {
-		return userId;
-	}
 
 	public String getEmail() {
 		return email;

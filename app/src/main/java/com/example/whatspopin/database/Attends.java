@@ -1,24 +1,26 @@
 package com.example.whatspopin.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import java.io.Serializable;
 
-@Entity(primaryKeys = {"eventId","userId"})
-public class Attends {
+
+@Entity(primaryKeys = {"eventId","email"})
+public class Attends implements Serializable {
 	private int eventId;
-	private int userId;
+	@NonNull
+	private String email;
 
-	public Attends(int eventId,int userId)
+	public Attends(int eventId,String email)
 	{
 		this.eventId = eventId;
-		this.userId = userId;
+		this.email = email;
 	}
 
 	public int getEventId() {
 		return eventId;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
+	public String getEmail() {return email;}
 }
