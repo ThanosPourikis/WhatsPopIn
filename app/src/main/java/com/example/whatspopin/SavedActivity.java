@@ -20,11 +20,11 @@ public class SavedActivity extends Activity {
 		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
 
 
-		Executor myEx = Executors.newSingleThreadExecutor();
+		/*Executor myEx = Executors.newSingleThreadExecutor();
 		myEx.execute(() -> {
 			List<Event> ev = db.eventDao().getEventList();
 			runOnUiThread(() -> ScrollViewFill.fill(findViewById(R.id.savedActEvList), ev, 2));
-		});
+		});*/
 		TextView txt = findViewById(R.id.titleSavedEvents);
 
 		txt.setOnClickListener((View v) ->

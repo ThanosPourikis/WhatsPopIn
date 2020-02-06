@@ -18,12 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatspopin.database.Event;
-import com.example.whatspopin.database.WhatsPopInDatabase;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
@@ -33,11 +34,11 @@ import java.util.concurrent.Executors;
 
 public class CreateEvent extends AppCompatActivity {
 
-
-	final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
+	final FirebaseDatabase database = FirebaseDatabase.getInstance();
+	DatabaseReference myRef = database.getReference().child("Events").push();
 	private static final int PICK_IMAGE = 100;
 	private TextView usr;
-	private double loc[] ={0,0};
+	private double loc[] = {0, 0};
 	private TextView cat;
 	private TextView desc;
 
@@ -82,10 +83,10 @@ public class CreateEvent extends AppCompatActivity {
 				try {
 					loc[0] = place.getLatLng().latitude;
 					loc[1] = place.getLatLng().longitude;
-					System.out.println(loc[0]+","+loc[1]);
+					System.out.println(loc[0] + "," + loc[1]);
 					System.out.println(place.getLatLng().toString());
 
-				}catch (Exception e){
+				} catch (Exception e) {
 					System.out.println(e);
 				}
 			}
@@ -107,9 +108,8 @@ public class CreateEvent extends AppCompatActivity {
 								, cat.getText().toString(), desc.getText().toString()
 								, date.getAutofillValue().getDateValue(), (time.getHour() + ":" + time.getMinute())
 								, imgByteArray);
+						myRef.setValue(event);
 
-
-						db.eventDao().insertEvent(event);
 					});
 
 					Intent intent = new Intent(view.getContext(), MainActivity.class);

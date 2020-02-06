@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,22 +17,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatspopin.database.Event;
 import com.example.whatspopin.database.WhatsPopInDatabase;
+import com.google.firebase.database.DataSnapshot;
 
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public final class ScrollViewFill extends AppCompatActivity {
 
-	public static void fill(LinearLayout ls, List<Event> eventList, int flag) {
+
+	public static void fill(LinearLayout ls, DataSnapshot snapshot, int flag) {
 		Context context = ls.getContext();
 		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(context);
 		Executor myExecutor = Executors.newSingleThreadExecutor();
+		Log.d("Snap",snapshot.getChildren().toString());
 
 
-		if (!eventList.isEmpty()) {
-			for (Event i : eventList) {
 
+		if (snapshot.hasChildren()) {
+			Log.d("Snap","True");
+			for (DataSnapshot snap : snapshot.getChildren()) {
+
+				Event i = snap.getValue(Event.class);
+				Log.d("Snap",snap.getValue(Event.class).toString());
 				LinearLayout li = new LinearLayout(context);
 				li.setOrientation(LinearLayout.HORIZONTAL);
 

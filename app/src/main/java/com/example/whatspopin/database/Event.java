@@ -5,7 +5,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
+import java.util.HashMap;
 
 @Entity
 public class Event implements Serializable {
@@ -28,8 +31,10 @@ public class Event implements Serializable {
 	@ColumnInfo(name = "time")
 	private String time;
 
+	@Ignore
+	public Event(){
 
-
+	}
 	public Event(int eventId, String name, String place, String category, String description,long date,String time,int creatorId,byte[] image)
 	{
 		this.eventId = eventId;
@@ -77,5 +82,18 @@ public class Event implements Serializable {
 	public long getDate() {return date;}
 
 	public String getTime() {return time;}
+
+	@Exclude
+	public HashMap<String, Object> toMap(){
+		HashMap<String,Object> result = new HashMap<>();
+		result.put("name",name);
+		result.put("place",place);
+		result.put("category",category);
+		result.put("description",description);
+		result.put("creatorId",creatorId);
+		result.put("image",image);
+		result.put("time",time);
+		return result;
+	}
 }
 
