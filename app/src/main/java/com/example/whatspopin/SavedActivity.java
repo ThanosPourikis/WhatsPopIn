@@ -4,33 +4,60 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.whatspopin.database.Event;
-import com.example.whatspopin.database.WhatsPopInDatabase;
+import androidx.annotation.NonNull;
 
-import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class SavedActivity extends Activity {
+	private DatabaseReference mPostReference;
+	private TextView txt;
+	private TextView signout;
+	private FirebaseAuth mAuth;
+	private FirebaseUser user;
+
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.saved_events);
-		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(this);
+		txt = findViewById(R.id.titleSavedEvents);
+		signout = findViewById(R.id.signout);
+		mAuth = FirebaseAuth.getInstance();
+		user = mAuth.getCurrentUser();
+		mPostReference = FirebaseDatabase.getInstance().getReference().child("Events");
 
+		mPostReference.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				ScrollViewFill.fill(findViewById(R.id.savedActEvList), dataSnapshot, 0);
 
-		/*Executor myEx = Executors.newSingleThreadExecutor();
-		myEx.execute(() -> {
-			List<Event> ev = db.eventDao().getEventList();
-			runOnUiThread(() -> ScrollViewFill.fill(findViewById(R.id.savedActEvList), ev, 2));
-		});*/
-		TextView txt = findViewById(R.id.titleSavedEvents);
+			}
+
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+
+			}
+		});
 
 		txt.setOnClickListener((View v) ->
 		{
 			Intent myIntent = new Intent(v.getContext(), MainActivity.class);
-			startActivityForResult(myIntent, 0);
+			startActivity(myIntent);
+			finish();
+		});
+
+		signout.setOnClickListener((View v ) ->{
+			mAuth.signOut();
+			startActivity(new Intent(getApplicationContext(),MainActivity.class));
 			finish();
 		});
 

@@ -2,8 +2,8 @@ package com.example.whatspopin;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,45 +13,71 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatspopin.database.Event;
-import com.example.whatspopin.database.WhatsPopInDatabase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.io.File;
+
 
 public final class ScrollViewFill extends AppCompatActivity {
 
 
 	public static void fill(LinearLayout ls, DataSnapshot snapshot, int flag) {
 		Context context = ls.getContext();
-		final WhatsPopInDatabase db = WhatsPopInDatabase.getInstance(context);
-		Executor myExecutor = Executors.newSingleThreadExecutor();
-		Log.d("Snap",snapshot.getChildren().toString());
-
+		final StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://whatspopin-8145b.appspot.com");
 
 
 		if (snapshot.hasChildren()) {
-			Log.d("Snap","True");
+
 			for (DataSnapshot snap : snapshot.getChildren()) {
 
 				Event i = snap.getValue(Event.class);
-				Log.d("Snap",snap.getValue(Event.class).toString());
 				LinearLayout li = new LinearLayout(context);
 				li.setOrientation(LinearLayout.HORIZONTAL);
-
 				ImageView img = new ImageView(context);
-				try {
-					byte[] imgBitmap = i.getImage();
-					Bitmap bitmap = BitmapFactory.decodeByteArray(imgBitmap, 0, imgBitmap.length);
-					img.setImageBitmap(bitmap);
-				} catch (Exception e) {
-					System.out.println(e);
-					img.setImageResource(R.drawable.icon);
-				}
 
+					File temp = new File("events/"+i.getImagePath());
+					Log.d("PIC", "I : " + i.getImagePath());
+					Log.d("PIC", "PATH : " + temp.getPath());
+					Log.d("PIC","PATH2 : " +storageRef.child("events").child("8.jpg"));
+
+					/*storageRef.child("events").child(i.getImagePath()).getFile(temp)
+							.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+								@Override
+								public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+									Log.d("PIC", "Bytes : " + taskSnapshot.getBytesTransferred());
+
+									img.setImageBitmap(BitmapFactory.decodeFile(temp.getPath()));
+								}
+							}).addOnFailureListener(new OnFailureListener() {
+						@Override
+						public void onFailure(@NonNull Exception e) {
+							Log.d("PIC", e.toString());
+							img.setImageResource(R.drawable.icon);
+
+						}
+					});*/
+					storageRef.child("events").child(i.getImagePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+						@Override
+						public void onSuccess(Uri uri) {
+							Log.d("PIC",uri.toString());
+							new DownloadImageTask(img).execute(uri.toString());
+
+						}
+					}).addOnFailureListener(new OnFailureListener() {
+						@Override
+						public void onFailure(@NonNull Exception e) {
+							img.setImageResource(R.drawable.icon);
+						}
+					});
 				img.setLayoutParams(new LinearLayout.LayoutParams(200, 200));
 
 
@@ -88,9 +114,10 @@ public final class ScrollViewFill extends AppCompatActivity {
 					btn.setOnClickListener((View v) ->
 					{
 						Toast.makeText(context, "Deleting" + i.getName(), Toast.LENGTH_LONG).show();
-						myExecutor.execute(() -> db.eventDao().deleteEvent(i));
+						snap.getRef().removeValue();
 						Intent intent = new Intent(context, SavedActivity.class);
 						context.startActivity(intent);
+
 
 					});
 				}

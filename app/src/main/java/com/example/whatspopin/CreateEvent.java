@@ -6,7 +6,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -19,12 +22,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatspopin.database.Event;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
@@ -34,12 +44,13 @@ import java.util.concurrent.Executors;
 
 public class CreateEvent extends AppCompatActivity {
 
+	final FirebaseStorage storage = FirebaseStorage.getInstance();
 	final FirebaseDatabase database = FirebaseDatabase.getInstance();
 	DatabaseReference myRef = database.getReference().child("Events").push();
 	private static final int PICK_IMAGE = 100;
 	private TextView usr;
 	private double loc[] = {0, 0};
-	private TextView cat;
+	private AutoCompleteTextView cat;
 	private TextView desc;
 
 	private DatePicker date;
@@ -49,10 +60,14 @@ public class CreateEvent extends AppCompatActivity {
 
 	private Button next;
 
+	Uri imageUri;
+	private String imagePath;
 	private byte[] imgByteArray;
 	private Bitmap imgBitmap;
 
 	private static String TAG;//= AutocompleteFromFragmentActivity.class.getSimpleName();
+
+	private FirebaseAuth mAuth;
 
 
 	/**
@@ -61,7 +76,7 @@ public class CreateEvent extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_event);
-
+		StorageReference ref = storage.getReference();
 		usr = findViewById(R.id.eventNameText);
 		cat = findViewById(R.id.catTextArea);
 		desc = findViewById(R.id.descTextArea);
@@ -69,11 +84,19 @@ public class CreateEvent extends AppCompatActivity {
 		date = findViewById(R.id.date);
 		time = findViewById(R.id.time);
 
+		mAuth = FirebaseAuth.getInstance();
+		FirebaseUser user = mAuth.getCurrentUser();
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.catories));
+		cat = findViewById(R.id.catTextArea);
+		cat.setAdapter(adapter);
+
 		if (!Places.isInitialized()) {
 			Places.initialize(getApplicationContext(), getString(R.string.api_key));
 		}
-		AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
-				getSupportFragmentManager().findFragmentById(R.id.map_autocomplete_fragment);
+		AutocompleteSupportFragment autocompleteFragment =
+				(AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.map_autocomplete_fragment);
 		autocompleteFragment.setCountry("GR");
 		autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
@@ -100,24 +123,31 @@ public class CreateEvent extends AppCompatActivity {
 
 		next = findViewById(R.id.done);
 		next.setOnClickListener((View view) -> {
-					Executor myExecutor = Executors.newSingleThreadExecutor();
-					myExecutor.execute(() ->
-					{
+			StorageReference img =	ref.child("events/"+imageUri.getLastPathSegment());
+			UploadTask upload = img.putFile(imageUri);
 
+			upload.addOnFailureListener(new OnFailureListener() {
+				@Override
+				public void onFailure(@NonNull Exception e) {
+					Log.d("PIC",e.toString());
+				}
+			}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+				@Override
+				public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+					imagePath = img.getName();
 						Event event = new Event(usr.getText().toString(), loc.toString()
 								, cat.getText().toString(), desc.getText().toString()
 								, date.getAutofillValue().getDateValue(), (time.getHour() + ":" + time.getMinute())
-								, imgByteArray);
+								,user.getUid(), imagePath);
 						myRef.setValue(event);
-
-					});
+				}
+			});
 
 					Intent intent = new Intent(view.getContext(), MainActivity.class);
 					startActivity(intent);
 					setResult(RESULT_OK, intent);
 					finish();
 				}
-
 		);
 		Button up = findViewById(R.id.upload);
 		up.setOnClickListener((View view) -> selectPhoto());
@@ -141,18 +171,9 @@ public class CreateEvent extends AppCompatActivity {
 		Executor myExecutor = Executors.newSingleThreadExecutor();
 
 		if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-			Uri imageUri = data.getData();
+			imageUri = data.getData();
 			imageView.setImageURI(imageUri);
-			try {
-				imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				myExecutor.execute(() -> {
-					imgBitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos);
-					imgByteArray = bos.toByteArray();
-				});
-			} catch (Exception e) {
-				System.out.println(e);
-			}
+
 			imageView.setVisibility(View.VISIBLE);
 			imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1080));
 		}

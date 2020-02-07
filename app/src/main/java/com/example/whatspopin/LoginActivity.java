@@ -5,22 +5,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.whatspopin.database.WhatsPopInDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 								if (task.isSuccessful()) {
 									Log.d(TAG, "signInWithEmail:success");
 									startActivity(new Intent(getApplicationContext(), MainActivity.class));
+									finish();
 								} else {
 									Log.w(TAG, "signInWithEmail:failure", task.getException());
 									Toast.makeText(LoginActivity.this, "Authentication failed.",
@@ -62,20 +58,9 @@ public class LoginActivity extends AppCompatActivity {
 
 			});
 		}else{
+			startActivity(new Intent(getApplicationContext(), SavedActivity.class));
+			finish();
 
-			email.setVisibility(View.INVISIBLE);
-			pass.setVisibility(View.INVISIBLE);
-			registerBtn.setVisibility(View.INVISIBLE);
-			findViewById(R.id.passText).setVisibility(View.INVISIBLE);
-			findViewById(R.id.orText).setVisibility(View.INVISIBLE);
-			TextView a = findViewById(R.id.mailTxt);
-			a.setText(user.getEmail());
-			loginBtn.setText("Log out");
-			loginBtn.setOnClickListener((View v) -> {
-				mAuth.signOut();
-				startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-			});
 		}
 
 		registerBtn.setOnClickListener((View v) -> {

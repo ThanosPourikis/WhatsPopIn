@@ -33,13 +33,13 @@
                 android:textColor="#0D0C0B"
                 android:textSize="25dp" />
 
-            <ImageView
-                android:id="@+id/profile"
+            <TextView
+                android:id="@+id/signout"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingVertical="15dp"
-                android:src="@drawable/icon" />
+                android:gravity="center"
+                android:text="Sign Out" />
 
         </LinearLayout>
 
