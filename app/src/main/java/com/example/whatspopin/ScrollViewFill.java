@@ -32,7 +32,7 @@ public final class ScrollViewFill extends AppCompatActivity {
 
 	public static void fill(LinearLayout ls, DataSnapshot snapshot, int flag) {
 		Context context = ls.getContext();
-		final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+		final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("events");
 
 
 		if (snapshot.hasChildren()) {
@@ -62,10 +62,10 @@ public final class ScrollViewFill extends AppCompatActivity {
 
 						}
 					});*/
-					storageRef.child("events").child(i.getImagePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+					storageRef.child(i.getImagePath()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
 						@Override
 						public void onSuccess(Uri uri) {
-							Log.d("PIC",uri.toString());
+							//Log.d("PIC",uri.toString());
 							new DownloadImageTask(img).execute(uri.toString());
 
 						}
@@ -112,6 +112,7 @@ public final class ScrollViewFill extends AppCompatActivity {
 					{
 						Toast.makeText(context, "Deleting" + i.getName(), Toast.LENGTH_LONG).show();
 						snap.getRef().removeValue();
+						storageRef.child(i.getImagePath()).delete();
 						Intent intent = new Intent(context, SavedActivity.class);
 						context.startActivity(intent);
 
