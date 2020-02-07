@@ -32,7 +32,7 @@ public final class ScrollViewFill extends AppCompatActivity {
 
 	public static void fill(LinearLayout ls, DataSnapshot snapshot, int flag) {
 		Context context = ls.getContext();
-		final StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://whatspopin-8145b.appspot.com");
+		final StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
 
 		if (snapshot.hasChildren()) {
@@ -43,13 +43,10 @@ public final class ScrollViewFill extends AppCompatActivity {
 				LinearLayout li = new LinearLayout(context);
 				li.setOrientation(LinearLayout.HORIZONTAL);
 				ImageView img = new ImageView(context);
+				//Log.d("PIC","PATH2 : " +storageRef.child("events").child("8.jpg"));
 
-					File temp = new File("events/"+i.getImagePath());
-					Log.d("PIC", "I : " + i.getImagePath());
-					Log.d("PIC", "PATH : " + temp.getPath());
-					Log.d("PIC","PATH2 : " +storageRef.child("events").child("8.jpg"));
-
-					/*storageRef.child("events").child(i.getImagePath()).getFile(temp)
+					/*File temp = new File("events/"+i.getImagePath());
+					storageRef.child("events").child(i.getImagePath()).getFile(temp)
 							.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
 								@Override
 								public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
@@ -129,4 +126,5 @@ public final class ScrollViewFill extends AppCompatActivity {
 			}
 		}
 	}
+
 }

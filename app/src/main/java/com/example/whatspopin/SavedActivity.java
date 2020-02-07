@@ -3,8 +3,10 @@ package com.example.whatspopin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +26,7 @@ public class SavedActivity extends Activity {
 	private TextView signout;
 	private FirebaseAuth mAuth;
 	private FirebaseUser user;
-
+	private LinearLayout savedView;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,11 +36,12 @@ public class SavedActivity extends Activity {
 		mAuth = FirebaseAuth.getInstance();
 		user = mAuth.getCurrentUser();
 		mPostReference = FirebaseDatabase.getInstance().getReference().child("Events");
-
+		savedView =findViewById(R.id.savedActEvList);
 		mPostReference.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-				ScrollViewFill.fill(findViewById(R.id.savedActEvList), dataSnapshot, 0);
+				savedView.removeAllViews();
+				ScrollViewFill.fill(savedView, dataSnapshot, 0);
 
 			}
 

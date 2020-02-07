@@ -15,8 +15,12 @@
 	<string name="loggedIn">You have to logged in to access that function</string>
 	<string name="email">Email</string>
 	<string-array name="catories">
-		<item>Help</item>
-		<item>help</item>
+		<item>Concert</item>
+		<item>Get together</item>
+		<item>Party</item>
+		<item>Theater</item>
+		<item>Sports</item>
+
 	</string-array>
 	<string name="titleCont">Your PopIns</string>
 	<string name="mainTitle">What\'s PopIn\'</string>

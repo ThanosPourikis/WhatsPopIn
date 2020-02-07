@@ -17,13 +17,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 	private DatabaseReference mPostReference;
 	private FirebaseAuth mAuth;
-
+	private LinearLayout mainView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
 		mPostReference = FirebaseDatabase.getInstance().getReference().child("Events");
 		mAuth = FirebaseAuth.getInstance();
 		setContentView(R.layout.activity_main);
-
+		mainView = findViewById(R.id.mainActEvList);
 		mPostReference.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-				ScrollViewFill.fill(findViewById(R.id.mainActEvList), dataSnapshot, 1);
-
+				mainView.removeAllViews();
+				ScrollViewFill.fill(mainView, dataSnapshot, 1);
 			}
 
 			@Override
