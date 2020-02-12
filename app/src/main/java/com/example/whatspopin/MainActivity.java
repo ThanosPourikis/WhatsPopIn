@@ -22,18 +22,21 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-	private DatabaseReference mPostReference;
+
+	private DatabaseReference reference;
 	private FirebaseAuth mAuth;
 	private LinearLayout mainView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mPostReference = FirebaseDatabase.getInstance().getReference().child("Events");
+		reference = FirebaseDatabase.getInstance().getReference().child("Events");
+
 		mAuth = FirebaseAuth.getInstance();
 		setContentView(R.layout.activity_main);
 		mainView = findViewById(R.id.mainActEvList);
-		mPostReference.addValueEventListener(new ValueEventListener() {
+		//Pare ta teleutaia apo ta Events pou den exoun teliosi idi
+		reference.orderByChild("date").startAt(System.currentTimeMillis()).limitToLast(10).addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 				mainView.removeAllViews();
@@ -57,13 +60,7 @@ public class MainActivity extends AppCompatActivity {
 		);
 
 		ImageView img = findViewById(R.id.profile);
-		img.setOnClickListener((View view) -> {
-
-					startActivity(new Intent(view.getContext(), LoginActivity.class));
-
-				}
-		);
-
+		img.setOnClickListener((View view) -> startActivity(new Intent(view.getContext(), LoginActivity.class)));
 
 	}
 

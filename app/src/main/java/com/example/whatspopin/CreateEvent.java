@@ -1,10 +1,10 @@
 package com.example.whatspopin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatspopin.database.Event;
@@ -38,7 +37,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 
@@ -76,7 +74,6 @@ public class CreateEvent extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.create_event);
-
 
 		StorageReference ref = storage.getReference();
 		usr = findViewById(R.id.eventNameText);
@@ -126,7 +123,7 @@ public class CreateEvent extends AppCompatActivity {
 		next = findViewById(R.id.done);
 		next.setOnClickListener((View view) -> {
 			StorageReference img =	ref.child("events/"+imageUri.getLastPathSegment());
-			UploadTask upload = img.putFile(imageUri);
+			UploadTask upload = img.putBytes(imgByteArray);
 
 			upload.addOnFailureListener(new OnFailureListener() {
 				@Override
@@ -170,12 +167,24 @@ public class CreateEvent extends AppCompatActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		Executor myExecutor = Executors.newSingleThreadExecutor();
 
 		if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
 			imageUri = data.getData();
 			imageView.setImageURI(imageUri);
 
+			try {
+				imgBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				Executors.newSingleThreadExecutor().execute(() -> {
+					Log.i("PIC","Compress");
+					imgBitmap.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+					imgByteArray = bos.toByteArray();
+					Log.i("PIC","Compression Finished");
+
+				});
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 			imageView.setVisibility(View.VISIBLE);
 			imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1080));
 		}

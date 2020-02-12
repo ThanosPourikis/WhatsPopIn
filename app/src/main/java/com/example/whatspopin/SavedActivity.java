@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class SavedActivity extends Activity {
-	private DatabaseReference mPostReference;
+	private DatabaseReference reference;
 	private TextView txt;
 	private TextView signout;
 	private FirebaseAuth mAuth;
@@ -35,9 +35,9 @@ public class SavedActivity extends Activity {
 		signout = findViewById(R.id.signout);
 		mAuth = FirebaseAuth.getInstance();
 		user = mAuth.getCurrentUser();
-		mPostReference = FirebaseDatabase.getInstance().getReference().child("Events");
+		reference = FirebaseDatabase.getInstance().getReference().child("Events");
 		savedView =findViewById(R.id.savedActEvList);
-		mPostReference.addValueEventListener(new ValueEventListener() {
+		reference.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 				savedView.removeAllViews();
