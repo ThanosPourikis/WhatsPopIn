@@ -3,9 +3,7 @@ package com.example.whatspopin;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,10 +19,11 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class SavedActivity extends Activity {
-	private DatabaseReference reference;
+	private DatabaseReference referenceAttends;
+
 	private TextView txt;
 	private TextView signout;
-	private FirebaseAuth mAuth;
+	private FirebaseAuth auth;
 	private FirebaseUser user;
 	private LinearLayout savedView;
 
@@ -33,16 +32,16 @@ public class SavedActivity extends Activity {
 		setContentView(R.layout.saved_events);
 		txt = findViewById(R.id.titleSavedEvents);
 		signout = findViewById(R.id.signout);
-		mAuth = FirebaseAuth.getInstance();
-		user = mAuth.getCurrentUser();
-		reference = FirebaseDatabase.getInstance().getReference().child("Events");
-		savedView =findViewById(R.id.savedActEvList);
-		reference.addValueEventListener(new ValueEventListener() {
+		auth = FirebaseAuth.getInstance();
+		user = auth.getCurrentUser();
+		savedView = findViewById(R.id.savedActEvList);
+		referenceAttends = FirebaseDatabase.getInstance().getReference().child("Attends").child(auth.getUid());
+
+		referenceAttends.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 				savedView.removeAllViews();
-				ScrollViewFill.fill(savedView, dataSnapshot, 0);
-
+				ScrollViewFill.fill(savedView,dataSnapshot,0);
 			}
 
 			@Override
@@ -51,6 +50,7 @@ public class SavedActivity extends Activity {
 			}
 		});
 
+
 		txt.setOnClickListener((View v) ->
 		{
 			Intent myIntent = new Intent(v.getContext(), MainActivity.class);
@@ -58,9 +58,9 @@ public class SavedActivity extends Activity {
 			finish();
 		});
 
-		signout.setOnClickListener((View v ) ->{
-			mAuth.signOut();
-			startActivity(new Intent(getApplicationContext(),MainActivity.class));
+		signout.setOnClickListener((View v) -> {
+			auth.signOut();
+			startActivity(new Intent(getApplicationContext(), MainActivity.class));
 			finish();
 		});
 

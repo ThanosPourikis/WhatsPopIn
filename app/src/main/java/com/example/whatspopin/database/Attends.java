@@ -3,24 +3,34 @@ package com.example.whatspopin.database;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
+import java.util.HashMap;
 
 
 @Entity(primaryKeys = {"eventId","email"})
 public class Attends implements Serializable {
-	private int eventId;
+	private String eventId;
 	@NonNull
-	private String email;
+	private String userId;
 
-	public Attends(int eventId,String email)
+	public Attends(String eventId,String userId)
 	{
 		this.eventId = eventId;
-		this.email = email;
+		this.userId = userId;
 	}
 
-	public int getEventId() {
-		return eventId;
-	}
+	public String getEventId() {return eventId;}
 
-	public String getEmail() {return email;}
+	@NonNull
+	public String getUserId() {return userId;}
+
+	@Exclude
+	public HashMap<String, Object> toMap() {
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("eventId",eventId);
+		result.put("userId",userId);
+		return result;
+	}
 }

@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 @Entity
 public class Event implements Serializable {
+	@ColumnInfo(name = "id")
+	private String id;
 	@ColumnInfo(name = "name")
 	private String name;
 	@ColumnInfo(name = "place")

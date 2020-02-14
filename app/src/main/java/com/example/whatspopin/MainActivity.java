@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 					}
 				}
 		);
-
 		ImageView img = findViewById(R.id.profile);
 		img.setOnClickListener((View view) -> startActivity(new Intent(view.getContext(), LoginActivity.class)));
 

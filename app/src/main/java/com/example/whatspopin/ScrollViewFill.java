@@ -17,7 +17,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.whatspopin.database.Event;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -30,13 +33,14 @@ public final class ScrollViewFill extends AppCompatActivity {
 	public static void fill(LinearLayout ls, DataSnapshot snapshot, int flag) {
 		Context context = ls.getContext();
 		final StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("events");
-
-
+		FirebaseAuth auth = FirebaseAuth.getInstance();
+		DatabaseReference databaseRefAtt = FirebaseDatabase.getInstance().getReference().child("Attends");
+		DatabaseReference databaseRefEv = FirebaseDatabase.getInstance().getReference().child("Events");
 		if (snapshot.hasChildren()) {
-
 			for (DataSnapshot snap : snapshot.getChildren()) {
 
 				Event i = snap.getValue(Event.class);
+
 				LinearLayout li = new LinearLayout(context);
 				li.setOrientation(LinearLayout.HORIZONTAL);
 				ImageView img = new ImageView(context);
@@ -98,25 +102,35 @@ public final class ScrollViewFill extends AppCompatActivity {
 					intent.putExtra("eventObj", i);
 					context.startActivity(intent);
 				});
-
 				if (flag == 1) {
 					btn.setText("PopIn");
-
-					btn.setOnClickListener((View v) ->
-							Toast.makeText(context, i.getName(), Toast.LENGTH_LONG).show());
-				} else {
-					btn.setText("Delete");
-					btn.setOnClickListener((View v) ->
-					{
-						Toast.makeText(context, "Deleting" + i.getName(), Toast.LENGTH_LONG).show();
-						snap.getRef().removeValue();
-						storageRef.child(i.getImagePath()).delete();
-						new File(context.getCacheDir() + "/events/" + i.getImagePath() + ".jpg").delete();
-						Intent intent = new Intent(context, SavedActivity.class);
-						context.startActivity(intent);
-
-
+					btn.setOnClickListener((View v) ->{
+						databaseRefAtt.child(auth.getUid()).child(snap.getKey()).setValue(i);
+						Toast.makeText(context, "Popin In " + i.getName(), Toast.LENGTH_LONG).show();
 					});
+				} else {
+					if (auth.getUid().equals(i.getCreatorId())) {
+
+						btn.setText("Delete");
+						btn.setOnClickListener((View v) ->
+						{
+							Toast.makeText(context, "Deleting" + i.getName(), Toast.LENGTH_LONG).show();
+							databaseRefEv.child(snap.getKey()).removeValue();
+							snap.getRef().removeValue();
+							storageRef.child(i.getImagePath()).delete();
+							new File(context.getCacheDir() + "/events/" + i.getImagePath() + ".jpg").delete();
+							Intent intent = new Intent(context, SavedActivity.class);
+							context.startActivity(intent);
+						});
+					}else{
+						btn.setText("Pop Out");
+						btn.setOnClickListener((View v) ->{
+							snap.getRef().removeValue();
+							Toast.makeText(context, "Popin Out" + i.getName(), Toast.LENGTH_LONG).show();
+
+						});
+
+					}
 				}
 
 				li.addView(btn);
