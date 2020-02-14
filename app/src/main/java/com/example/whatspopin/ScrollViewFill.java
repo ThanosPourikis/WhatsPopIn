@@ -91,6 +91,7 @@ public final class ScrollViewFill extends AppCompatActivity {
 				//Text for Description
 				txt = new TextView(context);
 				txt.setText(i.getDescription());
+				txt.setLayoutParams(new LinearLayout.LayoutParams(400,400));
 				li2.addView(txt);
 
 				li.addView(img);
