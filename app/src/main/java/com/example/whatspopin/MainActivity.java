@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		reference = FirebaseDatabase.getInstance().getReference().child("Events");
-
 		mAuth = FirebaseAuth.getInstance();
+
 		setContentView(R.layout.activity_main);
 		mainView = findViewById(R.id.mainActEvList);
 		//Pare ta teleutaia apo ta Events pou den exoun teliosi idi
